@@ -1,6 +1,5 @@
 const {Client} = require('pg')
 const {getPostgresDataType,ITEM_SCHEMA} = require('./dataConfig')
-const { name } = require('ejs')
 
 const client = new Client({
     connectionString:`postgres://${process.env.ROLE_NAME}:${process.env.PASSWORD}@localhost:5432/${process.env.DATABASE}`
