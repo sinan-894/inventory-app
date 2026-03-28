@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <h1><%= locals.catogory %> Items</h1>
     <div>
 
         <% items.forEach(item => { %>
@@ -19,5 +20,6 @@
             <% } %>
         <% }) %>
     </div>  
+    <a href="/">go back to index</a>
 </body>
 </html>
