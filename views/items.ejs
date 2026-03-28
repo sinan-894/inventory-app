@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+
+        <% items.forEach(item => { %>
+            <div>
+                <img src="<%= item.image %>" alt="">
+                <p><%= item.name %></p>
+            </div>
+            <% if (!locals.catogory) { %>
+                <p>item.catogory</p>
+                
+            <% } %>
+        <% }) %>
+    </div>  
+</body>
+</html>
