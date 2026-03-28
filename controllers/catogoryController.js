@@ -1,5 +1,5 @@
 const {body,validationResult,matchedData}  = require('express-validator')
-
+const {CATOGORY_SCHEMA,getFormInputTag} = require('../dataConfig')
 
 const catogories = []
 
@@ -8,6 +8,10 @@ function getAllCatogories(req,res){
     res.render('catogories',{catogories:catogories})
 }
 
+function getCatogoryCreateForm(req,res){
+    const catogoryRows  = Object.keys(CATOGORY_SCHEMA)
+    res.render('newCatogory',{catogories:catogoryRows,getTag:getFormInputTag})
+}
 
 function handleCatogoryCreatePost(req,res){
     const error = validationResult()
@@ -21,5 +25,6 @@ function handleCatogoryCreatePost(req,res){
 
 
 module.exports = {
-    getAllCatogories
+    getAllCatogories,
+    getCatogoryCreateForm,
 }
