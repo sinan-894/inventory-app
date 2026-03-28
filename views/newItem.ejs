@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/item" method="post">
+    <form action="/items" method="post">
         <% items.forEach(item => { %>
             <label for="<%= item %>"><%= item %></label>
             <%- getTag(item) %>
