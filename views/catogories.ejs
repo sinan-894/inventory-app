@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-
+    <h1>Catogories</h1>
    <% if (locals.catogories) { %>
         <% catogories.forEach(catogory => { %>
             <a href="/<%= catogory %>">
@@ -17,5 +17,6 @@
             </a>
         <% }) %>
    <% } %>
+   <a href="/">go back to index</a>
 </body>
 </html>
