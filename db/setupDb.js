@@ -1,20 +1,23 @@
 const {Client} = require('pg')
-const {getPostgresDataType,ITEM_SCHEMA} = require('../dataConfig')
+const {getPostgresDataType,ITEM_SCHEMA,CATOGORY_SCHEMA} = require('../dataConfig')
 
 const client = new Client({
     connectionString:`postgres://${process.env.ROLE_NAME}:${process.env.PASSWORD}@localhost:5432/${process.env.DATABASE}`
 })
 
-const itemsSqlDefinition = Object.entries(ITEM_SCHEMA).
-    map(([row,type])=>`${row} ${getPostgresDataType(type)}`).
-    join(',')
+const getSqlDefinition = (schema) =>{
+    return Object.entries(schema).
+        map(([row,type])=>`${row} ${getPostgresDataType(type)}`).
+        join(',')
+}
+const itemsSqlDefinition = getSqlDefinition(ITEM_SCHEMA) 
+const catogorySqlDefinition = getSqlDefinition(CATOGORY_SCHEMA)
 
 const SQL = `
 create table if not exists catogory (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(255),
     created_on date,
-    discription VARCHAR(255)
+    ${catogorySqlDefinition}
 );
 
 

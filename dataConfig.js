@@ -8,6 +8,12 @@ const ITEM_SCHEMA = {
 
 }
 
+const CATOGORY_SCHEMA = {
+    'name':'text',
+    'image':'image',
+    'discription':'textarea'
+}
+
 
 const POSTGRES_DATA_TYPE = {
     'text':'VARCHAR(255)',
@@ -37,6 +43,7 @@ const getFormInputTag = (field)=>{
 
 module.exports={
     ITEM_SCHEMA,
+    CATOGORY_SCHEMA,
     getPostgresDataType,
     getFormInputTag,
 }
