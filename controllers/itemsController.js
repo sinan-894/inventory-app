@@ -1,6 +1,6 @@
 
 const {body,validationResult,matchedData}  = require('express-validator')
-const {ITEM_SCHEMA,getFormInputTag} = require('./dataConfig')
+const {ITEM_SCHEMA,getFormInputTag} = require('../dataConfig')
 
 const items = []
 
