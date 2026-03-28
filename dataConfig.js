@@ -22,6 +22,14 @@ const POSTGRES_DATA_TYPE = {
 
 }
 
+const {body} = require('express-validator')
+const VALIDATIONS = {
+    'name': body('name').isEmpty().withMessage('name cant be empty')
+            .trim().isLength({min:1,max:50}).withMessage('name shold be between 1 and 50 charachters'),
+    'image': body('image').isEmpty().withMessage('image cannot be empty'),
+    'discription': body("discription").isEmpty().withMessage('discription cannot be empty')
+}
+
 //this object contains the the corresponding html tag for row of items 
 //enter the starting and closing of the tag name and id will be inserted later
 const FORM_INPUT_TAG = {
@@ -44,6 +52,8 @@ const getFormInputTag = (field)=>{
 module.exports={
     ITEM_SCHEMA,
     CATOGORY_SCHEMA,
+    VALIDATIONS,
     getPostgresDataType,
     getFormInputTag,
+
 }
