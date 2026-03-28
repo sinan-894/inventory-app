@@ -13,5 +13,13 @@
         <% }) %>
         <button type="submit">submit</button>
     </form>
+
+    <% if (locals.catogories) { %>
+        <select name="catogory" id="catogory">
+            <% catogories.forEach(catogory => { %>
+                <option value="<%= catogory %>"><%= catogory %></option>
+            <% }) %>
+        </select>
+    <% } %>
 </body>
 </html>
