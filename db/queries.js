@@ -26,7 +26,10 @@ async function getAllCatogory() {
 
 
 async function getItemsOf(catogory) {
-    const {rows} = await pool.query('select * from items left join catogory on items.catogoryid=catogory.id where catogory.name=$1;',[catogory]) 
+    const {rows} = await pool.query(`
+        SELECT  * from items LEFT JOIN catogory
+        ON items.catogoryid=catogory.id 
+        WHERE catogory.name=$1;`,[catogory]) 
     return rows
     
 }
@@ -34,9 +37,10 @@ async function getItemsOf(catogory) {
 async function getItem(itemName) {
         
     const {rows} = await pool.query(`
-            SELECT * from items
-            WHERE name=$1
-        `,[itemName])
+        SELECT * from items
+        WHERE name=$1
+    `,[itemName])
+    return rows
 }
 
 
@@ -47,5 +51,5 @@ module.exports = {
     getItemsOf,
     insertItems,
     insertCategory,
-    
+
 }
