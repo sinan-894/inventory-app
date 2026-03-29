@@ -1,4 +1,5 @@
 const pool = require('./pool')
+const {genratePlaceHolder} = require('../handlerFunctions')
 
 async function insertItems(items){
     const rows = Object.keys(items).join(',')
@@ -9,8 +10,12 @@ async function insertItems(items){
 
 async function insertCategory(items) {
     const rows = Object.keys(items).join(',')
-    const values = Object.values(items).join(',') 
-    await pool.query('insert into catogory ($1) values ($2);',[rows,values])
+    console.log(rows)
+    const values = Object.values(items)
+    console.log(values)
+    const sql = `insert into catogory (${rows}) values (${genratePlaceHolder(values.length)});`
+    console.log(sql)
+    await pool.query(sql,values)
 }
 
 async function getAllItems() {
