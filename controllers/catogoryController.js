@@ -2,6 +2,7 @@ const {body,validationResult,matchedData}  = require('express-validator')
 const {CATOGORY_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
 const {insertCategory} = require('../db/queries')
 const upload  = require('./multerConfig')
+const {getTodayDate} = require('../handlerFunctions')
 const catogories = []
 
 const catogoryRows  = Object.keys(CATOGORY_SCHEMA)
@@ -17,7 +18,7 @@ function getCatogoryCreateForm(req,res){
 const catogoryValidations = catogoryRows.map(rows=>{
     return VALIDATIONS[rows]
 }) 
-function handleCatogoryCreatePost(req,res){
+async function handleCatogoryCreatePost(req,res){
     const error = validationResult(req) 
     if(!error.isEmpty()){
         console.log('error')
@@ -26,6 +27,12 @@ function handleCatogoryCreatePost(req,res){
     const data = matchedData(req)
     console.log(data)
     console.log(req.file)
+    await insertCategory({
+        'created_on':getTodayDate(),
+        'name':data.name,
+        'image':req.file.filename,
+        'discription':data.discription,
+    })
     res.send('uploaded')
 }
 
