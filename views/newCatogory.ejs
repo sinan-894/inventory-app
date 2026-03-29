@@ -7,7 +7,7 @@
 </head>
 <body>
     
-    <form action="/catogory" method="post">
+    <form action="/catogory" method="post" enctype="multipart/form-data">
         <% catogories.forEach(catogory => { %>
             <label for="<%= catogory %>"><%= catogory %></label>
             <%- getTag(catogory) %>

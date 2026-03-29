@@ -2,6 +2,7 @@
 const {body,validationResult,matchedData}  = require('express-validator')
 const {ITEM_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
 
+const upload  = require('./multerConfig')
 const items = []
 
 const itemsRows =  Object.keys(ITEM_SCHEMA)
@@ -19,6 +20,7 @@ const itemsValidations = itemsRows.map(rows=>{
     return VALIDATIONS[rows]
 }) 
 function handleitemsCreatePost(req,res){
+    console.log(req)
     const error = validationResult(req)
     if(!error.isEmpty()){
         console.log('error')
@@ -28,7 +30,7 @@ function handleitemsCreatePost(req,res){
     console.log(data)
 }
 
-const itemsCreatePost  = [itemsValidations,handleitemsCreatePost]
+const itemsCreatePost  = [upload.single('image'),itemsValidations,handleitemsCreatePost]
 
 
 module.exports = {
