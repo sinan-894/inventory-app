@@ -3,8 +3,12 @@ const {genratePlaceHolder} = require('../handlerFunctions')
 
 async function insertItems(items){
     const rows = Object.keys(items).join(',')
-    const values = Object.values(items).join(',') 
-    await pool.query('insert into items ($1) values ($2);',[rows,values])
+    console.log(rows)
+    const values = Object.values(items)
+    console.log(values)
+    const sql = `insert into items (${rows}) values (${genratePlaceHolder(values.length)});`
+    console.log(sql)
+    await pool.query(sql,values)
 
 }
 

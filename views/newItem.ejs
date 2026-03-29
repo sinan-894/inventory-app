@@ -11,15 +11,17 @@
             <label for="<%= item %>"><%= item %></label>
             <%- getTag(item) %>
         <% }) %>
+
+        <% if (locals.catogories) { %>
+            <select name="catogory" id="catogory">
+                <% catogories.forEach(catogory => { %>
+                    <option value="<%= catogory.id %>"><%= catogory.name %></option>
+                <% }) %>
+            </select>
+        <% } %>
+
         <button type="submit">submit</button>
     </form>
 
-    <% if (locals.catogories) { %>
-        <select name="catogory" id="catogory">
-            <% catogories.forEach(catogory => { %>
-                <option value="<%= catogory %>"><%= catogory %></option>
-            <% }) %>
-        </select>
-    <% } %>
 </body>
 </html>
