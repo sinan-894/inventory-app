@@ -1,5 +1,6 @@
 const {body,validationResult,matchedData}  = require('express-validator')
 const {CATOGORY_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
+const {insertCategory} = require('../db/queries')
 const upload  = require('./multerConfig')
 const catogories = []
 

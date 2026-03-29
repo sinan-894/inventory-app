@@ -1,17 +1,16 @@
 const pool = require('./pool')
-const {ITEM_SCHEMA,CATOGORY_SCHEMA} = require('../dataConfig')
 
 async function insertItems(items){
-    const sql = Object.keys(ITEM_SCHEMA).join(',')
-    const values = items.join(',')
-    await pool.query('insert into items ($1) values ($2);',[sql,values])
+    const rows = Object.keys(items).join(',')
+    const values = Object.values(items).join(',') 
+    await pool.query('insert into items ($1) values ($2);',[rows,values])
 
 }
 
 async function insertCategory(items) {
-    const sql = Object.keys(CATOGORY_SCHEMA).join(',')
-    const values = items.join(',') 
-    await pool.query('insert into items ($1) values ($2);',[sql,values])
+    const rows = Object.keys(items).join(',')
+    const values = Object.values(items).join(',') 
+    await pool.query('insert into catogory ($1) values ($2);',[rows,values])
 }
 
 async function getAllItems() {
