@@ -6,11 +6,13 @@
     <title>Document</title>
 </head>
 <body>
-   <img src="<%= item.image %>" alt="">
+   <!-- <img src="<%= item.image %>" alt=""> -->
    <div>
     <section><%= item.name %></section>
-    <section><%= item.created_on %></section>
+    <section><%= item.added_on %></section>
     <section><%= item.discription %></section>
    </div> 
+
+   <a href="<%= goBackTo %>">go back</a>
 </body>
 </html>

@@ -12,7 +12,7 @@
         <% items.forEach(item => { %>
             <div>
                 <!-- <img src="<%= item.image %>" alt=""> -->
-                <p><a href="/<%= item.catogory %>/<%= item.name %>"><%= item.name %></a></p>
+                <p><a href="<%= topUrl %>/<%= item.name %>"><%= item.name %></a></p>
 
                 <% if (!locals.catogory) { %>
                     <p><%=item.catogory%></p>
