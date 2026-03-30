@@ -27,7 +27,12 @@ async function getItemCreateForm(req,res){
         catogoriesName = catogories.map(catogory=>({id:catogory.id,name:catogory.name}))
     }
     console.log(catogoriesName)
-    res.render('newItem',{items:itemsRows,getTag:getFormInputTag,catogories:catogoriesName})
+    res.render('newItem',{
+        items:itemsRows,
+        getTag:getFormInputTag,
+        catogories:catogoriesName,
+        category:req.query.catogory
+    })
 
 }
 
@@ -37,6 +42,7 @@ const itemsValidations = itemsRows.map(rows=>{
 }) 
 async function handleitemsCreatePost(req,res){
     console.log(req.body)
+    const category = req.query.category
     const error = validationResult(req)
     if(!error.isEmpty()){
         console.log('error')
@@ -52,7 +58,7 @@ async function handleitemsCreatePost(req,res){
         'image':req.file.filename,
         'discription':data.discription,
     })
-    res.send('done')
+    category==''?res.redirect('/items'):res.redirect(`/catogory/${category}`)
 }
 
 const itemsCreatePost  = [upload.single('image'),itemsValidations,handleitemsCreatePost]

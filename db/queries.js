@@ -38,7 +38,7 @@ async function getAllCatogory() {
 async function getIdOfCatogory(categoryName) {
     const {rows} = await pool.query('select id from catogory where name=$1;',[categoryName])
     console.log(rows)
-    return rows[0].id
+    return rows.length?rows[0].id:0
     
 }
 
