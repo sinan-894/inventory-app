@@ -1,6 +1,6 @@
 const {body,validationResult,matchedData}  = require('express-validator')
 const {ITEM_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
-const {insertItems,getAllCatogory}  = require('../db/queries')
+const {insertItems,getAllCatogory,getAllItems,getCategoryFromId}  = require('../db/queries')
 const {getTodayDate} = require('../handlerFunctions')
 
 const upload  = require('./multerConfig')
@@ -8,9 +8,15 @@ const { name } = require('ejs')
 const items = []
 
 const itemsRows =  Object.keys(ITEM_SCHEMA)
-function getAllItems(req,res){
-
-    res.render('items',{items:items})
+async function displayAllItems(req,res){
+    const items = await getAllItems()
+    console.log(items)
+    res.render('items',{items:items.map(item=>(
+        {
+            name:item.name,
+            catogory: item.category_name,
+        }
+    ))})
 }
 
 async function getItemCreateForm(req,res){
@@ -52,7 +58,7 @@ const itemsCreatePost  = [upload.single('image'),itemsValidations,handleitemsCre
 
 
 module.exports = {
-    getAllItems,
+    displayAllItems,
     getItemCreateForm,
     itemsCreatePost
 }

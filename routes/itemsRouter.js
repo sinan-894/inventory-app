@@ -1,10 +1,10 @@
 const {Router} = require('express')
 const itemsRouter = Router()
-const {getAllItems,getItemCreateForm,itemsCreatePost} = require('../controllers/itemsController')
+const {displayAllItems,getItemCreateForm,itemsCreatePost} = require('../controllers/itemsController')
 
 
 
-itemsRouter.get('/',getAllItems)
+itemsRouter.get('/',displayAllItems)
 itemsRouter.post('/',itemsCreatePost)
 itemsRouter.get('/new',getItemCreateForm)
 
