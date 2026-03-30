@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "Dbsetup": "node --env-file=.env db/setupDb.js"
+    "db-setup": "node --env-file=.env db/setupDb.js",
+    "start":"node --env-file=.env --watch app.js"
   },
   "repository": {
     "type": "git",
