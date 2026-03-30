@@ -1,6 +1,6 @@
 const {body,validationResult,matchedData}  = require('express-validator')
 const {CATOGORY_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
-const {insertCategory,getAllCatogory} = require('../db/queries')
+const {insertCategory,getAllCatogory,getItemsOf} = require('../db/queries')
 const upload  = require('./multerConfig')
 const {getTodayDate} = require('../handlerFunctions')
 
@@ -36,11 +36,20 @@ async function handleCatogoryCreatePost(req,res){
     res.redirect('/catogory')
 }
 
+async function displayItemsOfCatogory(req,res) {
+    const rows = await getItemsOf(req.params.category)
+    res.render('items',{items:rows.map(row=>({
+        name:row.name,
+    })),catogory:req.params.category})
+    
+}
+
 
 const catogoryCreatePost  = [upload.single('image'),catogoryValidations,handleCatogoryCreatePost]
 
 module.exports = {
     getAllCatogories,
     getCatogoryCreateForm,
-    catogoryCreatePost
+    catogoryCreatePost,
+    displayItemsOfCatogory
 }

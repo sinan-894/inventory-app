@@ -43,7 +43,7 @@ async function getCategoryFromId(id) {
 
 async function getItemsOf(catogory) {
     const {rows} = await pool.query(`
-        SELECT  * from items LEFT JOIN catogory
+        SELECT  items.* from items LEFT JOIN catogory
         ON items.catogoryid=catogory.id 
         WHERE catogory.name=$1;`,
         [catogory]) 

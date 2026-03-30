@@ -7,9 +7,8 @@
 </head>
 <body>
     <h1><%= locals.catogory %> Items</h1>
-    <a href="items/new?catogory=<%= locals.catogory %>">add new item</a>
+    <a href="new?catogory=<%= locals.catogory %>">add new item</a>
     <div>
-
         <% items.forEach(item => { %>
             <div>
                 <!-- <img src="<%= item.image %>" alt=""> -->

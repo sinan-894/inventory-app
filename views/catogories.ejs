@@ -10,7 +10,7 @@
     <a href="catogory/new">new catogory</a>
    <% if (locals.catogories) { %>
         <% catogories.forEach(catogory => { %>
-            <a href="/<%= catogory.name %>">
+            <a href="catogory/<%= catogory.name %>">
                 <div>
                     <!-- <img src="./uploads/<%= catogory.image %>" alt=""> -->
                     <p><%= catogory.name %></p>
