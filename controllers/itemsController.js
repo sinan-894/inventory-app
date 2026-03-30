@@ -1,6 +1,6 @@
 const {body,validationResult,matchedData}  = require('express-validator')
 const {ITEM_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
-const {insertItems,getAllCatogory,getAllItems,getCategoryFromId}  = require('../db/queries')
+const {insertItems,getAllCatogory,getAllItems,getIdOfCatogory}  = require('../db/queries')
 const {getTodayDate} = require('../handlerFunctions')
 
 const upload  = require('./multerConfig')
@@ -20,7 +20,8 @@ async function displayAllItems(req,res){
 }
 
 async function getItemCreateForm(req,res){
-    let catogoriesName = []
+    let catogoriesName = [{name:req.query.catogory,id:await getIdOfCatogory(req.query.catogory)}]
+
     if(req.query.catogory==''){
         const catogories = await getAllCatogory()
         catogoriesName = catogories.map(catogory=>({id:catogory.id,name:catogory.name}))

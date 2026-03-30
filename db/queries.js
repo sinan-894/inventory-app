@@ -35,9 +35,10 @@ async function getAllCatogory() {
     return rows
 }
 
-async function getCategoryFromId(id) {
-    const {rows} = await pool.query('select name from catogory where id=$1;',[id])
-    return rows[0].name
+async function getIdOfCatogory(categoryName) {
+    const {rows} = await pool.query('select id from catogory where name=$1;',[categoryName])
+    console.log(rows)
+    return rows[0].id
     
 }
 
@@ -68,6 +69,6 @@ module.exports = {
     getItemsOf,
     insertItems,
     insertCategory,
-    getCategoryFromId,
+    getIdOfCatogory,
 
 }
