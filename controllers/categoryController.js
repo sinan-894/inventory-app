@@ -39,7 +39,7 @@ async function displayItemsOfCategory(req,res) {
     const rows = await getItemsOf(req.params.category)
     res.render('items',{items:rows.map(row=>({
         name:row.name,
-    })),category:req.params.category,topUrl:`/category/${req.params.category}`})
+    })),category:req.params.category,calledFrom:req.params.category})
     
 }
 

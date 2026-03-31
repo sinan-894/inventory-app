@@ -13,7 +13,7 @@ async function displayAllItems(req,res){
             name:item.name,
             category: item.category_name,
         }
-    )),topUrl:'/items'})
+    )),calledFrom:'items'})
             
 }
 
@@ -39,7 +39,6 @@ const itemsValidations = itemsRows.map(rows=>{
     return VALIDATIONS[rows]
 }) 
 async function handleitemsCreatePost(req,res){
-    console.log(req)
     const category = req.query.category
     const error = validationResult(req)
     if(!error.isEmpty()){

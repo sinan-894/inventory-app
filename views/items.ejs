@@ -11,8 +11,13 @@
     <div>
         <% items.forEach(item => { %>
             <div>
-                <p><a href="<%= topUrl %>/<%= item.name %>"><%= item.name %></a></p>
+               <% if (calledFrom=='items') { %>
+                    <p><a href="items/<%= item.name %>"><%= item.name %></a></p>
 
+               <% } else { %>
+                    <p><a href="category/<%= calledFrom %>/<%= item.name %>"><%= item.name %></a></p>
+
+               <% } %> 
                 <% if (!locals.category) { %>
                     <p><%=item.category%></p>
                     
@@ -20,6 +25,12 @@
             </div>
         <% }) %>
     </div>  
-    <a href="/">go back to index</a>
+    <% if (calledFrom=='items') { %>
+        <a href="/">go back to index</a>
+
+    <% } else { %>
+        
+        <a href="/category">go back to categories </a>
+    <% } %>
 </body>
 </html>
