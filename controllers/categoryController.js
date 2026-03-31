@@ -1,6 +1,6 @@
 const {body,validationResult,matchedData}  = require('express-validator')
 const {CATEGORY_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
-const {insertCategory,getAllCategory,getItemsOf,getItem} = require('../db/queries')
+const {insertCategory,getAllCategory,getItemsOf,getItem,deleteFromCategory} = require('../db/queries')
 const {getTodayDate} = require('../handlerFunctions')
 
 
@@ -56,10 +56,18 @@ async function displayItem(req,res) {
     
 }
 
+async function deleteCategory(req,res) {
+    const categoryName = req.query.category
+    await deleteFromCategory(categoryName)
+    res.redirect('/category')
+    
+    
+}
 module.exports = {
     getAllCategories,
     getCategoryCreateForm,
     categoryCreatePost,
     displayItemsOfCategory,
-    displayItem
+    displayItem,
+    deleteCategory,
 }
