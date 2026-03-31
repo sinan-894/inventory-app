@@ -7,6 +7,9 @@
 </head>
 <body>
     <h1><%= locals.category %> Items</h1>
+    <% if (locals.category) { %>
+        <a href="/category/new?update=<%= locals.category %>">update</a>
+    <% } %>
     <a href="/items/new?category=<%= locals.category %>">add new item</a>
     <div>
         <% items.forEach(item => { %>

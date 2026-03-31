@@ -1,5 +1,5 @@
 const {body,validationResult,matchedData}  = require('express-validator')
-const {ITEM_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
+const {ITEM_SCHEMA,VALIDATIONS,getItemFormInputTag} = require('../dataConfig')
 const {insertItems,getAllCategory,getAllItems,getIdOfCategory,getItem,deleteFromItems}  = require('../db/queries')
 const {getTodayDate} = require('../handlerFunctions')
 
@@ -27,7 +27,7 @@ async function getItemCreateForm(req,res){
     console.log(categoriesName)
     res.render('newItem',{
         items:itemsRows,
-        getTag:getFormInputTag,
+        getTag:getItemFormInputTag,
         categories:categoriesName,
         category:req.query.category
     })

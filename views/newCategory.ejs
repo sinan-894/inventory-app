@@ -8,15 +8,15 @@
 </head>
 <body>
     
-    <form action="/category" method="post" >
+    <form action="<%= action %>" method="post" >
         <% categories.forEach(category => { %>
             <label for="<%= category %>"><%= category %></label>
-            <%- getTag(category) %>
+            <%- getTag(category,locals.update[category]) %>
         <% }) %>
         <button type="submit">submit</button>
     </form>
 
-    <a href="/category">go back</a>
+    <a href="<%= backUrl %>">go back</a>
     
 </body>
 </html>

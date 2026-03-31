@@ -29,8 +29,8 @@ const VALIDATIONS = {
 //this object contains the the corresponding html tag for row of items 
 //enter the starting and closing of the tag name and id will be inserted later
 const FORM_INPUT_TAG = {
-    'text':['<input type="text"','>'],
-    'textarea':['<textarea ','></textarea>'],
+    'text':['<input type="text"',`value='`,`'>`],
+    'textarea':['<textarea ','>','</textarea>'],
     'image':[`<input type='file' accept='image/*'`,`>`]
 
 
@@ -41,8 +41,15 @@ const getPostgresDataType = (type)=>{
     return POSTGRES_DATA_TYPE[type]
 }
 
-const getFormInputTag = (field)=>{
+const getItemFormInputTag = (field)=>{
     return FORM_INPUT_TAG[ITEM_SCHEMA[field]].join(`name=${field} id=${field}`)
+}
+
+const getCategoryFormInputTag = (field,value)=>{
+    console.log(value)
+    value = (value)?value:''
+    const tagTemplate =  FORM_INPUT_TAG[CATEGORY_SCHEMA[field]] 
+    return `${tagTemplate[0]} name=${field} id=${field} ${tagTemplate[1]}${value}${tagTemplate[2]}`
 }
 
 module.exports={
@@ -50,6 +57,7 @@ module.exports={
     CATEGORY_SCHEMA,
     VALIDATIONS,
     getPostgresDataType,
-    getFormInputTag,
+    getItemFormInputTag,
+    getCategoryFormInputTag,
 
 }

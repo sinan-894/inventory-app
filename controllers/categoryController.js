@@ -1,6 +1,6 @@
 const {body,validationResult,matchedData}  = require('express-validator')
-const {CATEGORY_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
-const {insertCategory,getAllCategory,getItemsOf,getItem,deleteFromCategory} = require('../db/queries')
+const {CATEGORY_SCHEMA,VALIDATIONS,getCategoryFormInputTag} = require('../dataConfig')
+const {insertCategory,getAllCategory,getItemsOf,getItem,deleteFromCategory,updateCategoryOf,getRowOfCategory, getIdOfCategory} = require('../db/queries')
 const {getTodayDate} = require('../handlerFunctions')
 
 
@@ -11,8 +11,22 @@ async function getAllCategories(req,res){
     res.render('categories',{categories:categories})
 }
 
-function getCategoryCreateForm(req,res){
-    res.render('newCategory',{categories:categoryRows,getTag:getFormInputTag})
+async function getCategoryCreateForm(req,res){
+    console.log(req.query.update)
+    !req.query.update?
+    res.render('newCategory',{
+        categories:categoryRows,
+        getTag:getCategoryFormInputTag,
+        action:"/category",
+        backUrl:'/category'
+    }):
+    res.render('newCategory',{
+        categories:categoryRows,
+        getTag:getCategoryFormInputTag,
+        action:`/category?update=${req.query.update}`,
+        backUrl:`/category/${req.query.update}`,
+        update:await getRowOfCategory(req.query.update),
+    })
 }
 
 const categoryValidations = categoryRows.map(rows=>{
@@ -25,6 +39,11 @@ async function handleCategoryCreatePost(req,res){
         console.log(error.array())
     }
     const data = matchedData(req)
+    if(req.query.update){
+        updateCategory(req.query.update,data,res)
+        return 0
+    }
+
     console.log(data)
     console.log(req.file)
     await insertCategory({
@@ -60,7 +79,13 @@ async function deleteCategory(req,res) {
     const categoryName = req.query.category
     await deleteFromCategory(categoryName)
     res.redirect('/category')
-    
+}
+
+async function updateCategory(category,data,res) {
+    const id = await getIdOfCategory(category)
+    const values = Object.values(data)
+    await updateCategoryOf(id,values)
+    res.redirect(`/category/${data.name}`)
     
 }
 module.exports = {
