@@ -1,6 +1,6 @@
 const {body,validationResult,matchedData}  = require('express-validator')
 const {ITEM_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
-const {insertItems,getAllCategory,getAllItems,getIdOfCategory,getItem}  = require('../db/queries')
+const {insertItems,getAllCategory,getAllItems,getIdOfCategory,getItem,deleteFromItems}  = require('../db/queries')
 const {getTodayDate} = require('../handlerFunctions')
 
 
@@ -65,9 +65,15 @@ async function displayItem(req,res) {
     
 }
 
+async function deleteItems(req,res) {
+    const itemName = req.query.item
+    await deleteFromItems(itemName)
+    res.redirect('/items')
+}
 module.exports = {
     displayAllItems,
     getItemCreateForm,
     displayItem,
-    itemsCreatePost
+    itemsCreatePost,
+    deleteItems,
 }
