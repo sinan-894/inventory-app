@@ -6,16 +6,15 @@
     <title>Document</title>
 </head>
 <body>
-    <h1><%= locals.catogory %> Items</h1>
-    <a href="/items/new?catogory=<%= locals.catogory %>">add new item</a>
+    <h1><%= locals.category %> Items</h1>
+    <a href="/items/new?category=<%= locals.category %>">add new item</a>
     <div>
         <% items.forEach(item => { %>
             <div>
-                <!-- <img src="<%= item.image %>" alt=""> -->
                 <p><a href="<%= topUrl %>/<%= item.name %>"><%= item.name %></a></p>
 
-                <% if (!locals.catogory) { %>
-                    <p><%=item.catogory%></p>
+                <% if (!locals.category) { %>
+                    <p><%=item.category%></p>
                     
                 <% } %>
             </div>

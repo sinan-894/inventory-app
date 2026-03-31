@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>categories</h1>
+    <a href="category/new">new category</a>
+   <% if (locals.categories) { %>
+        <% categories.forEach(category => { %>
+            <a href="category/<%= category.name %>">
+                <div>
+                    <p><%= category.name %></p>
+                </div>
+            </a>
+        <% }) %>
+   <% } %>
+   <a href="/">go back to index</a>
+</body>
+</html>

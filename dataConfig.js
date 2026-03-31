@@ -7,7 +7,7 @@ const ITEM_SCHEMA = {
 
 }
 
-const CATOGORY_SCHEMA = {
+const CATEGORY_SCHEMA = {
     'name':'text',
     'discription':'textarea'
 }
@@ -47,7 +47,7 @@ const getFormInputTag = (field)=>{
 
 module.exports={
     ITEM_SCHEMA,
-    CATOGORY_SCHEMA,
+    CATEGORY_SCHEMA,
     VALIDATIONS,
     getPostgresDataType,
     getFormInputTag,

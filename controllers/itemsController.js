@@ -1,6 +1,6 @@
 const {body,validationResult,matchedData}  = require('express-validator')
 const {ITEM_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
-const {insertItems,getAllCatogory,getAllItems,getIdOfCatogory,getItem}  = require('../db/queries')
+const {insertItems,getAllCategory,getAllItems,getIdOfCategory,getItem}  = require('../db/queries')
 const {getTodayDate} = require('../handlerFunctions')
 
 
@@ -11,25 +11,25 @@ async function displayAllItems(req,res){
     res.render('items',{items:items.map(item=>(
         {
             name:item.name,
-            catogory: item.category_name,
+            category: item.category_name,
         }
     )),topUrl:'/items'})
             
 }
 
 async function getItemCreateForm(req,res){
-    let catogoriesName = [{name:req.query.catogory,id:await getIdOfCatogory(req.query.catogory)}]
+    let categoriesName = [{name:req.query.category,id:await getIdOfCategory(req.query.category)}]
 
-    if(req.query.catogory==''){
-        const catogories = await getAllCatogory()
-        catogoriesName = catogories.map(catogory=>({id:catogory.id,name:catogory.name}))
+    if(req.query.category==''){
+        const categories = await getAllCategory()
+        categoriesName = categories.map(category=>({id:category.id,name:category.name}))
     }
-    console.log(catogoriesName)
+    console.log(categoriesName)
     res.render('newItem',{
         items:itemsRows,
         getTag:getFormInputTag,
-        catogories:catogoriesName,
-        category:req.query.catogory
+        categories:categoriesName,
+        category:req.query.category
     })
 
 }
@@ -39,7 +39,7 @@ const itemsValidations = itemsRows.map(rows=>{
     return VALIDATIONS[rows]
 }) 
 async function handleitemsCreatePost(req,res){
-    console.log(req.body)
+    console.log(req)
     const category = req.query.category
     const error = validationResult(req)
     if(!error.isEmpty()){
@@ -47,15 +47,14 @@ async function handleitemsCreatePost(req,res){
         console.log(error.array())
     }
     const data = matchedData(req)
-    console.log(req.file)
     console.log(data)
     await insertItems({
         'name':data.name,
-        'catogoryid':Number(req.body.catogory),
+        'categoryid':Number(req.body.category),
         'added_on':getTodayDate(),
         'discription':data.discription,
     })
-    category==''?res.redirect('/items'):res.redirect(`/catogory/${category}`)
+    category==''?res.redirect('/items'):res.redirect(`/category/${category}`)
 }
 
 const itemsCreatePost  = [itemsValidations,handleitemsCreatePost]

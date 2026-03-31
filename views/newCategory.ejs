@@ -8,15 +8,15 @@
 </head>
 <body>
     
-    <form action="/catogory" method="post" enctype="multipart/form-data">
-        <% catogories.forEach(catogory => { %>
-            <label for="<%= catogory %>"><%= catogory %></label>
-            <%- getTag(catogory) %>
+    <form action="/category" method="post" >
+        <% categories.forEach(category => { %>
+            <label for="<%= category %>"><%= category %></label>
+            <%- getTag(category) %>
         <% }) %>
         <button type="submit">submit</button>
     </form>
 
-    <a href="/catogory">go back</a>
+    <a href="/category">go back</a>
     
 </body>
 </html>

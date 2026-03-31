@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="/form.css">
 </head>
 <body>
-    <form action="/items?category=<%= category %>" method="post" enctype="multipart/form-data">
+    <form action="/items?category=<%= category %>" method="post" >
         <% items.forEach(item => { %>
             <label for="<%= item %>"><%= item %></label>
             <%- getTag(item) %>
         <% }) %>
 
-        <% if (locals.catogories) { %>
-            <select name="catogory" id="catogory">
-                <% catogories.forEach(catogory => { %>
-                    <option value="<%= catogory.id %>"><%= catogory.name %></option>
+        <% if (locals.categories) { %>
+            <select name="category" id="category">
+                <% categories.forEach(category => { %>
+                    <option value="<%= category.id %>"><%= category.name %></option>
                 <% }) %>
             </select>
         <% } %>

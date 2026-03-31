@@ -17,37 +17,37 @@ async function insertCategory(items) {
     console.log(rows)
     const values = Object.values(items)
     console.log(values)
-    const sql = `insert into catogory (${rows}) values (${genratePlaceHolder(values.length)});`
+    const sql = `insert into category (${rows}) values (${genratePlaceHolder(values.length)});`
     console.log(sql)
     await pool.query(sql,values)
 }
 
 async function getAllItems() {
     const {rows} = await pool.query(`
-        SELECT items.*,catogory.name as category_name from items LEFT JOIN catogory
-        ON items.catogoryid=catogory.id; 
+        SELECT items.*,category.name as category_name from items LEFT JOIN category
+        ON items.categoryid=category.id; 
     `)
     return rows
 }
 
-async function getAllCatogory() {
-    const { rows } = await pool.query('select * from catogory;')
+async function getAllCategory() {
+    const { rows } = await pool.query('select * from category;')
     return rows
 }
 
-async function getIdOfCatogory(categoryName) {
-    const {rows} = await pool.query('select id from catogory where name=$1;',[categoryName])
+async function getIdOfCategory(categoryName) {
+    const {rows} = await pool.query('select id from category where name=$1;',[categoryName])
     console.log(rows)
     return rows.length?rows[0].id:0
     
 }
 
-async function getItemsOf(catogory) {
+async function getItemsOf(category) {
     const {rows} = await pool.query(`
-        SELECT  items.* from items LEFT JOIN catogory
-        ON items.catogoryid=catogory.id 
-        WHERE catogory.name=$1;`,
-        [catogory]) 
+        SELECT  items.* from items LEFT JOIN category
+        ON items.categoryid=category.id 
+        WHERE category.name=$1;`,
+        [category]) 
     return rows
     
 }
@@ -63,12 +63,12 @@ async function getItem(itemName) {
 
 
 module.exports = {
-    getAllCatogory,
+    getAllCategory,
     getAllItems,
     getItem,
     getItemsOf,
     insertItems,
     insertCategory,
-    getIdOfCatogory,
+    getIdOfCategory,
 
 }

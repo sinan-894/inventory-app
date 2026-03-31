@@ -1,13 +1,13 @@
 const {Router} = require('express')
 const mainRouter = Router()
 const {itemsRouter} = require('./itemsRouter')
-const {catogoriesRouter} = require('./catogoriesRouter')
+const {categoriesRouter} = require('./categoriesRouter')
 
 mainRouter.get('/',(req,res)=>{
     res.render('index')
 })
 
-mainRouter.use('/catogory',catogoriesRouter)
+mainRouter.use('/category',categoriesRouter)
 mainRouter.use('/items',itemsRouter)
 
 module.exports = {
