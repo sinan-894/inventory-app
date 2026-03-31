@@ -3,14 +3,12 @@
 //to add new row enter name of the row as key and its html input type as key
 const ITEM_SCHEMA = {
     'name':'text',
-    'image':'image',
     'discription':'textarea',
 
 }
 
 const CATOGORY_SCHEMA = {
     'name':'text',
-    'image':'image',
     'discription':'textarea'
 }
 
@@ -18,7 +16,6 @@ const CATOGORY_SCHEMA = {
 const POSTGRES_DATA_TYPE = {
     'text':'VARCHAR(255)',
     'textarea':'TEXT',
-    'image':'VARCHAR(255)'
 
 }
 
@@ -26,7 +23,6 @@ const {body} = require('express-validator')
 const VALIDATIONS = {
     'name': body('name').notEmpty().withMessage('name cant be empty')
             .trim().isLength({min:1,max:50}).withMessage('name shold be between 1 and 50 charachters'),
-    'image': body('image').notEmpty().withMessage('image cannot be empty'),
     'discription': body("discription").notEmpty().withMessage('discription cannot be empty')
 }
 

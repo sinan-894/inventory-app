@@ -3,7 +3,6 @@ const {ITEM_SCHEMA,VALIDATIONS,getFormInputTag} = require('../dataConfig')
 const {insertItems,getAllCatogory,getAllItems,getIdOfCatogory,getItem}  = require('../db/queries')
 const {getTodayDate} = require('../handlerFunctions')
 
-const upload  = require('./multerConfig')
 
 const itemsRows =  Object.keys(ITEM_SCHEMA)
 async function displayAllItems(req,res){
@@ -54,13 +53,12 @@ async function handleitemsCreatePost(req,res){
         'name':data.name,
         'catogoryid':Number(req.body.catogory),
         'added_on':getTodayDate(),
-        'image':req.file.filename,
         'discription':data.discription,
     })
     category==''?res.redirect('/items'):res.redirect(`/catogory/${category}`)
 }
 
-const itemsCreatePost  = [upload.single('image'),itemsValidations,handleitemsCreatePost]
+const itemsCreatePost  = [itemsValidations,handleitemsCreatePost]
 
 async function displayItem(req,res) {
     const row = await getItem(req.params.item)

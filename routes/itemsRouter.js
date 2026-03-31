@@ -6,8 +6,8 @@ const {displayAllItems,getItemCreateForm,itemsCreatePost,displayItem} = require(
 
 itemsRouter.get('/',displayAllItems)
 itemsRouter.post('/',itemsCreatePost)
-itemsRouter.get('/:item',displayItem)
 itemsRouter.get('/new',getItemCreateForm)
+itemsRouter.get('/:item',displayItem)
 
 module.exports = {
     itemsRouter
