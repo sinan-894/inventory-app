@@ -1,6 +1,6 @@
 const {body,validationResult,matchedData}  = require('express-validator')
 const {ITEM_SCHEMA,VALIDATIONS,getItemFormInputTag} = require('../dataConfig')
-const {insertItems,getAllCategory,getAllItems,getIdOfCategory,getItem,deleteFromItems}  = require('../db/queries')
+const {insertItems,getAllCategory,getAllItems,getIdOfCategory,getItem,deleteFromItems,getRowOfItem,getIdOfItem,updateItemOf}  = require('../db/queries')
 const {getTodayDate} = require('../handlerFunctions')
 
 
@@ -24,12 +24,19 @@ async function getItemCreateForm(req,res){
         const categories = await getAllCategory()
         categoriesName = categories.map(category=>({id:category.id,name:category.name}))
     }
+    const send = {items:itemsRows,getTag:getItemFormInputTag,categories:categoriesName,category:req.query.category}
     console.log(categoriesName)
+    !req.query.update?
     res.render('newItem',{
-        items:itemsRows,
-        getTag:getItemFormInputTag,
-        categories:categoriesName,
-        category:req.query.category
+        ...send,
+        action:`/items?category=${req.query.category}`,
+        backUrl:`/items`
+    }):
+    res.render('newItem',{
+        ...send,
+        action:`/items?category=${req.query.category}&update=${req.query.update}`,
+        backUrl:req.query.category==""?`/items`:`/category/${req.query.category}`,
+        update: await getRowOfItem(req.query.update)
     })
 
 }
@@ -46,6 +53,10 @@ async function handleitemsCreatePost(req,res){
         console.log(error.array())
     }
     const data = matchedData(req)
+    if(req.query.update){
+        updateItem(req.query.update,data,res)
+        return 0
+    }
     console.log(data)
     await insertItems({
         'name':data.name,
@@ -55,6 +66,15 @@ async function handleitemsCreatePost(req,res){
     })
     category==''?res.redirect('/items'):res.redirect(`/category/${category}`)
 }
+
+async function updateItem(item,data,res) {
+    const id = await getIdOfItem(item)
+    const values = Object.values(data)
+    await updateItemOf(id,values)
+    res.redirect(`/items/${data.name}`)
+    
+}
+
 
 const itemsCreatePost  = [itemsValidations,handleitemsCreatePost]
 

@@ -41,8 +41,11 @@ const getPostgresDataType = (type)=>{
     return POSTGRES_DATA_TYPE[type]
 }
 
-const getItemFormInputTag = (field)=>{
-    return FORM_INPUT_TAG[ITEM_SCHEMA[field]].join(`name=${field} id=${field}`)
+const getItemFormInputTag = (field,value)=>{
+    console.log('item valuess',value)
+    value = (value)?value:''
+    const tagTemplate =  FORM_INPUT_TAG[ITEM_SCHEMA[field]] 
+    return `${tagTemplate[0]} name=${field} id=${field} ${tagTemplate[1]}${value}${tagTemplate[2]}`
 }
 
 const getCategoryFormInputTag = (field,value)=>{

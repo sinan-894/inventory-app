@@ -7,10 +7,15 @@
     <link rel="stylesheet" href="/form.css">
 </head>
 <body>
-    <form action="/items?category=<%= category %>" method="post" >
+    <form action="<%= action %>" method="post" >
         <% items.forEach(item => { %>
             <label for="<%= item %>"><%= item %></label>
-            <%- getTag(item) %>
+            <% if (locals.update) { %>
+                <%- getTag(item,locals.update[item]) %>
+            <% } else { %>
+                <%- getTag(item,"") %>
+             
+            <% } %>
         <% }) %>
 
         <% if (locals.categories) { %>
@@ -24,7 +29,7 @@
         <button type="submit">submit</button>
     </form>
 
-    <a href="/items">go back</a>
+    <a href="<%= backUrl %>">go back</a>
 
 </body>
 </html>

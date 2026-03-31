@@ -11,7 +11,7 @@ const genratePlaceHolder = (n)=>{
    return placeHolder.slice(0,-1)
 }
 
-const genrateUpdatePlaceHolder = (schema,n)=>{
+const genrateUpdatePlaceHolder = (schema)=>{
     const columns = Object.keys(schema)
     return columns.reduce((placeHolder,column,index)=>placeHolder + `${column}=$${index+1},`,'').slice(0,-1)
 }

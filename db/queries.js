@@ -88,6 +88,30 @@ async function updateCategoryOf(id,values) {
     await pool.query(sql,values)
     
 }
+
+async function updateItemOf(id,values) {
+    const sql = `
+        UPDATE items 
+        SET ${genrateUpdatePlaceHolder(ITEM_SCHEMA,values.length)}
+        WHERE id=${id};
+    `
+    console.log(sql)
+    await pool.query(sql,values)
+    
+}
+
+async function getIdOfItem(item) {
+    const {rows}  = await pool.query('select id from items where name=$1',[item])
+    return rows.length?rows[0].id:0
+    
+}
+
+async function getRowOfItem(name) {
+    const {rows} =await pool.query('select * from items where name=$1',[name])
+    return rows[0]
+    
+}
+
 module.exports = {
     getAllCategory,
     getAllItems,
@@ -100,5 +124,8 @@ module.exports = {
     deleteFromItems,
     updateCategoryOf,
     getRowOfCategory,
+    updateItemOf,
+    getIdOfItem,
+    getRowOfItem,
 
 }
