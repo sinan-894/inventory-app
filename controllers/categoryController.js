@@ -15,11 +15,12 @@ async function getCategoryCreateForm(req,res) {
     return 0
     
 }
-async function displayform(req,res,errors=[]){
+async function displayform(req,res,errors=[],values={}){
     const send = {
         categories:categoryRows,
         getTag:getCategoryFormInputTag,
-        errors:errors
+        errors:errors,
+        values:values,
 
     }
     !req.query.update?
@@ -32,7 +33,7 @@ async function displayform(req,res,errors=[]){
         ...send,
         action:`/category?update=${req.query.update}`,
         backUrl:`/category/${req.query.update}`,
-        update:await getRowOfCategory(req.query.update),
+        values:await getRowOfCategory(req.query.update),
     })
 }
 
@@ -46,7 +47,7 @@ async function handleCategoryCreatePost(req,res){
     if(!error.isEmpty()){
         console.log('error')
         console.log(error.array())
-        displayform(req,res,error.array())
+        displayform(req,res,error.array(),req.body)
         return 0
     }
     const data = matchedData(req)

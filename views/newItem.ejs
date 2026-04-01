@@ -18,12 +18,7 @@
     <form action="<%= action %>" method="post" >
         <% items.forEach(item => { %>
             <label for="<%= item %>"><%= item %></label>
-            <% if (locals.update) { %>
-                <%- getTag(item,locals.update[item]) %>
-            <% } else { %>
-                <%- getTag(item,"") %>
-             
-            <% } %>
+            <%- getTag(item,values[item]) %>
         <% }) %>
 
         <% if (locals.categories) { %>

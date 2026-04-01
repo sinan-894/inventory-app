@@ -17,11 +17,11 @@ async function displayAllItems(req,res){
 }
 
 async function getItemCreateForm(req,res) {
-    displayForm(req,res) 
+    await displayForm(req,res) 
     return 0
 }
 
-async function displayForm(req,res,errors=[]){
+async function displayForm(req,res,errors=[],values={}){
     let categoriesName = [{name:req.query.category,id:await getIdOfCategory(req.query.category)}]
 
     if(req.query.category==''){
@@ -34,7 +34,10 @@ async function displayForm(req,res,errors=[]){
         categories:categoriesName,
         category:req.query.category,
         errors:errors,
+        values:values,
     }
+
+    console.log('this is the send',send)
     !req.query.update?
     res.render('newItem',{
         ...send,
@@ -45,7 +48,7 @@ async function displayForm(req,res,errors=[]){
         ...send,
         action:`/items?category=${req.query.category}&update=${req.query.update}`,
         backUrl:req.query.category==""?`/items`:`/category/${req.query.category}`,
-        update: await getRowOfItem(req.query.update)
+        values: await getRowOfItem(req.query.update),
     })
 
 }
@@ -60,7 +63,7 @@ async function handleitemsCreatePost(req,res){
     if(!error.isEmpty()){
         console.log('error')
         console.log(error.array())
-        displayForm(req,res,error.array())
+        await displayForm(req,res,error.array(),req.body)
         return 0
     }
     const data = matchedData(req)

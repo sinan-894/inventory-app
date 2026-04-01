@@ -19,12 +19,7 @@
     <form action="<%= action %>" method="post" >
         <% categories.forEach(category => { %>
             <label for="<%= category %>"><%= category %></label>
-            <% if (locals.update) { %>
-                <%- getTag(category,locals.update[category]) %>
-            <% } else { %>
-                <%- getTag(category,"") %>
-             
-            <% } %>
+            <%- getTag(category,locals.values[category]) %>
         <% }) %>
         <button type="submit">submit</button>
     </form>
