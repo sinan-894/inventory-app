@@ -63,10 +63,11 @@ async function getItemsOf(category) {
 async function getItem(itemName) {
         
     const {rows} = await pool.query(`
-        SELECT * from items
-        WHERE name=$1
+        SELECT items.*,category.name as category from items LEFT JOIN category
+        ON items.categoryid=category.id
+        WHERE items.name=$1
     `,[itemName])
-    return rows
+    return rows[0]
 }
 
 async function deleteFromCategory(name){

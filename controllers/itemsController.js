@@ -54,7 +54,7 @@ async function handleitemsCreatePost(req,res){
     }
     const data = matchedData(req)
     if(req.query.update){
-        updateItem(req.query.update,data,res)
+        updateItem(category,req.query.update,data,res)
         return 0
     }
     console.log(data)
@@ -67,11 +67,11 @@ async function handleitemsCreatePost(req,res){
     category==''?res.redirect('/items'):res.redirect(`/category/${category}`)
 }
 
-async function updateItem(item,data,res) {
+async function updateItem(category,item,data,res) {
     const id = await getIdOfItem(item)
     const values = Object.values(data)
     await updateItemOf(id,values)
-    res.redirect(`/items/${data.name}`)
+    res.redirect(category==''?`/items/${data.name}`:`/category/${category}/${data.name}`)
     
 }
 
@@ -80,7 +80,7 @@ const itemsCreatePost  = [itemsValidations,handleitemsCreatePost]
 
 async function displayItem(req,res) {
     const row = await getItem(req.params.item)
-    res.render('item',{item:row[0],goBackTo:'/items'}) 
+    res.render('item',{item:row,goBackTo:'/items'}) 
 
     
 }

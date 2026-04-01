@@ -69,8 +69,9 @@ const categoryCreatePost  = [categoryValidations,handleCategoryCreatePost]
 async function displayItem(req,res) {
     console.log(req.params)
     const row = await getItem(req.params.item)
+    console.log(row)
     const category = req.params.category
-    res.render('item',{item:row[0],goBackTo:`/category/${category}`}) 
+    res.render('item',{item:row,goBackTo:`/category/${category}`}) 
 
     
 }
