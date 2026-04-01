@@ -4,22 +4,16 @@ const {ITEM_SCHEMA,CATEGORY_SCHEMA} = require('../dataConfig')
 
 async function insertItems(items){
     const rows = Object.keys(items).join(',')
-    console.log(rows)
     const values = Object.values(items)
-    console.log(values)
     const sql = `insert into items (${rows}) values (${genratePlaceHolder(values.length)});`
-    console.log(sql)
     await pool.query(sql,values)
 
 }
 
 async function insertCategory(items) {
     const rows = Object.keys(items).join(',')
-    console.log(rows)
     const values = Object.values(items)
-    console.log(values)
     const sql = `insert into category (${rows}) values (${genratePlaceHolder(values.length)});`
-    console.log(sql)
     await pool.query(sql,values)
 }
 
@@ -37,15 +31,12 @@ async function getAllCategory() {
 }
 
 async function getRowOfCategory(category) {
-    console.log(category)
     const {rows} = await pool.query('select * from category where name=$1',[category])
-    console.log('row category',rows)
     return rows[0]
     
 }
 async function getIdOfCategory(categoryName) {
     const {rows} = await pool.query('select id from category where name=$1;',[categoryName])
-    console.log(rows)
     return rows.length?rows[0].id:0
     
 }
@@ -85,7 +76,6 @@ async function updateCategoryOf(id,values) {
         SET ${genrateUpdatePlaceHolder(CATEGORY_SCHEMA,values.length)}
         WHERE id=${id};
     `
-    console.log(sql)
     await pool.query(sql,values)
     
 }
@@ -96,7 +86,6 @@ async function updateItemOf(id,values) {
         SET ${genrateUpdatePlaceHolder(ITEM_SCHEMA,values.length)}
         WHERE id=${id};
     `
-    console.log(sql)
     await pool.query(sql,values)
     
 }

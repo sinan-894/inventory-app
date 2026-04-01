@@ -7,7 +7,6 @@ const {getTodayDate} = require('../handlerFunctions')
 const itemsRows =  Object.keys(ITEM_SCHEMA)
 async function displayAllItems(req,res){
     const items = await getAllItems()
-    console.log(items)
     res.render('items',{items:items.map(item=>(
         {
             name:item.name,
@@ -25,7 +24,6 @@ async function getItemCreateForm(req,res){
         categoriesName = categories.map(category=>({id:category.id,name:category.name}))
     }
     const send = {items:itemsRows,getTag:getItemFormInputTag,categories:categoriesName,category:req.query.category}
-    console.log(categoriesName)
     !req.query.update?
     res.render('newItem',{
         ...send,
@@ -57,7 +55,6 @@ async function handleitemsCreatePost(req,res){
         updateItem(category,req.query.update,data,res)
         return 0
     }
-    console.log(data)
     await insertItems({
         'name':data.name,
         'categoryid':Number(req.body.category),

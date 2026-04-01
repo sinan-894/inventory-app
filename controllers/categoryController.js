@@ -7,12 +7,10 @@ const {getTodayDate} = require('../handlerFunctions')
 const categoryRows  = Object.keys(CATEGORY_SCHEMA)
 async function getAllCategories(req,res){
     const categories =  await getAllCategory()
-    console.log('categories',categories)
     res.render('categories',{categories:categories})
 }
 
 async function getCategoryCreateForm(req,res){
-    console.log(req.query.update)
     !req.query.update?
     res.render('newCategory',{
         categories:categoryRows,
@@ -44,8 +42,6 @@ async function handleCategoryCreatePost(req,res){
         return 0
     }
 
-    console.log(data)
-    console.log(req.file)
     await insertCategory({
         'created_on':getTodayDate(),
         'name':data.name,
@@ -67,9 +63,7 @@ const categoryCreatePost  = [categoryValidations,handleCategoryCreatePost]
 
 
 async function displayItem(req,res) {
-    console.log(req.params)
     const row = await getItem(req.params.item)
-    console.log(row)
     const category = req.params.category
     res.render('item',{item:row,goBackTo:`/category/${category}`}) 
 
