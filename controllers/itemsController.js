@@ -16,14 +16,25 @@ async function displayAllItems(req,res){
             
 }
 
-async function getItemCreateForm(req,res){
+async function getItemCreateForm(req,res) {
+    displayForm(req,res) 
+    return 0
+}
+
+async function displayForm(req,res,errors=[]){
     let categoriesName = [{name:req.query.category,id:await getIdOfCategory(req.query.category)}]
 
     if(req.query.category==''){
         const categories = await getAllCategory()
         categoriesName = categories.map(category=>({id:category.id,name:category.name}))
     }
-    const send = {items:itemsRows,getTag:getItemFormInputTag,categories:categoriesName,category:req.query.category}
+    const send = {
+        items:itemsRows,
+        getTag:getItemFormInputTag,
+        categories:categoriesName,
+        category:req.query.category,
+        errors:errors,
+    }
     !req.query.update?
     res.render('newItem',{
         ...send,
@@ -49,6 +60,8 @@ async function handleitemsCreatePost(req,res){
     if(!error.isEmpty()){
         console.log('error')
         console.log(error.array())
+        displayForm(req,res,error.array())
+        return 0
     }
     const data = matchedData(req)
     if(req.query.update){

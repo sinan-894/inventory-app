@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="/form.css">
 </head>
 <body>
+
+    <% if (locals.errors) { %>
+        <ul>
+           <% errors.forEach(error => { %>
+                <li><%= error.msg %></li>
+           <% }) %>
+        </ul>
+    <% } %>
     <form action="<%= action %>" method="post" >
         <% items.forEach(item => { %>
             <label for="<%= item %>"><%= item %></label>
