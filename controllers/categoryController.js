@@ -10,22 +10,33 @@ async function getAllCategories(req,res){
     res.render('categories',{categories:categories})
 }
 
-async function getCategoryCreateForm(req,res){
-    !req.query.update?
-    res.render('newCategory',{
+async function getCategoryCreateForm(req,res) {
+    await displayform(req,res)
+    return 0
+    
+}
+async function displayform(req,res,errors=[]){
+    const send = {
         categories:categoryRows,
         getTag:getCategoryFormInputTag,
+        errors:errors
+
+    }
+    !req.query.update?
+    res.render('newCategory',{
+        ...send,
         action:"/category",
         backUrl:'/category'
     }):
     res.render('newCategory',{
-        categories:categoryRows,
-        getTag:getCategoryFormInputTag,
+        ...send,
         action:`/category?update=${req.query.update}`,
         backUrl:`/category/${req.query.update}`,
         update:await getRowOfCategory(req.query.update),
     })
 }
+
+
 
 const categoryValidations = categoryRows.map(rows=>{
     return VALIDATIONS[rows]
@@ -35,6 +46,8 @@ async function handleCategoryCreatePost(req,res){
     if(!error.isEmpty()){
         console.log('error')
         console.log(error.array())
+        displayform(req,res,error.array())
+        return 0
     }
     const data = matchedData(req)
     if(req.query.update){
