@@ -37,7 +37,6 @@ async function displayForm(req,res,errors=[],values={}){
         values:values,
     }
 
-    console.log('this is the send',send)
     !req.query.update?
     res.render('newItem',{
         ...send,

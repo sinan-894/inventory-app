@@ -62,7 +62,9 @@ async function getItem(itemName) {
 }
 
 async function deleteFromCategory(name){
+    const id = await getIdOfCategory(name)
     await pool.query('delete from category where name=$1',[name])
+    await pool.query('delete from items where categoryid=$1;',[id])
 }
 
 async function deleteFromItems(name) {
