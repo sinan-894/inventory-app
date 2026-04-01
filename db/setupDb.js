@@ -2,7 +2,7 @@ const {Client} = require('pg')
 const {getPostgresDataType,ITEM_SCHEMA,CATEGORY_SCHEMA} = require('../dataConfig')
 const {getTodayDate} = require('../handlerFunctions')
 const client = new Client({
-    connectionString:`postgres://${process.env.ROLE_NAME}:${process.env.PASSWORD}@localhost:5432/${process.env.DATABASE}`
+    connectionString:process.env.CONNECTION_STRING
 })
 
 const getSqlDefinition = (schema) =>{
